@@ -12,13 +12,13 @@ const io = socketio(server);
 io.on('connection', (socket) => {
     console.log('A user connected' , socket.id);
     
-    socket.on('From client', () => {
-        console.log('Message From client');
+    socket.on('msg_send', (data) => {
+        console.log(data.msg);
+        //msg recieved from client
+        //now we can send response
+        io.emit('msg_rcvd',data);
     });
 
-    setInterval(() => {
-        socket.emit('message', 'Hello from server');
-    }, 2000);
 });
 
 app.use('/', express.static(__dirname + '/public'));
